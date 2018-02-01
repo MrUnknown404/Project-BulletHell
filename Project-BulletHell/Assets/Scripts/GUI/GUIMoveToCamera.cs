@@ -9,6 +9,6 @@ public class GUIMoveToCamera : MonoBehaviour {
 	}
 
 	private void Update() {
-		transform.LookAt(transform.position + cam.transform.rotation * Vector3.back, cam.transform.rotation * Vector3.up);
+		transform.LookAt(transform.position + cam.transform.rotation * Vector3.forward, cam.transform.rotation * Vector3.up);
 	}
 }

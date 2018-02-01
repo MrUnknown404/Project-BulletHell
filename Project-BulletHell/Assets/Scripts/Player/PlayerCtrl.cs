@@ -5,6 +5,8 @@
 public class PlayerCtrl : MonoBehaviour {
 
 	public float speed = 12f;
+	public int maxBombCount = 3;
+	public int bombCount;
 	public bool isMouseEnabled;
 	public bool lockCursor = true;
 	public bool isAutoFireOn = true;
@@ -18,11 +20,18 @@ public class PlayerCtrl : MonoBehaviour {
 		motor = GetComponent<PlayerMotor>();
 		gun = GetComponent<GunCtrl>();
 		fireRate = gun.fireRate;
+		bombCount = maxBombCount;
 		UpdateSettings();
 	}
 
 	private void UpdateSettings() {
 		motor.isMouseEnabled = isMouseEnabled;
+	}
+
+	private void OnTriggerEnter(Collider col) {
+		if (col.gameObject.tag == "EnemyBullet") {
+			Destroy(this.gameObject);
+		}
 	}
 
 	private void Update() {
@@ -34,6 +43,17 @@ public class PlayerCtrl : MonoBehaviour {
 			Cursor.lockState = CursorLockMode.Confined;
 		} else if (Cursor.lockState == CursorLockMode.Confined && lockCursor == false) {
 			Cursor.lockState = CursorLockMode.None;
+		}
+
+		if (Input.GetButtonDown("Key_Bomb")) {
+			if (bombCount <= 0) {
+				return;
+			}
+			bombCount--;
+			GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
+			foreach (GameObject bullet in bullets) {
+				Destroy(bullet.gameObject);
+			}
 		}
 
 		if (isAutoFireOn == true) {
