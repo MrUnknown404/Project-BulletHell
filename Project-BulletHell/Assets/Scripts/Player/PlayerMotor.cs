@@ -3,10 +3,10 @@
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMotor : MonoBehaviour {
 
-	public bool isMouseEnabled = true;
+	public bool isMouseEnabled;
 
 	private Vector3 velocity = Vector3.zero;
-
+	
 	private Rigidbody rb;
 
 	private void Start() {

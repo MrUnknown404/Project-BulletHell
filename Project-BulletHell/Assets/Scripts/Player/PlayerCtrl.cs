@@ -7,14 +7,15 @@ public class PlayerCtrl : MonoBehaviour {
 	public float speed = 12f;
 	public int maxBombCount = 3;
 	public int bombCount;
-	public bool isMouseEnabled;
 	public bool lockCursor = true;
 	public bool isAutoFireOn = true;
 	
 	private float fireRate;
+	private bool isMouseEnabled;
 
 	private PlayerMotor motor;
 	private GunCtrl gun;
+	private JsonData gm;
 
 	private void Start() {
 		motor = GetComponent<PlayerMotor>();
@@ -22,6 +23,16 @@ public class PlayerCtrl : MonoBehaviour {
 		fireRate = gun.fireRate;
 		bombCount = maxBombCount;
 		UpdateSettings();
+
+		gm = GameObject.Find("_GameManager").GetComponent<JsonData>();
+		gm.ReadConfig();
+
+		gm.ReadConfig();
+		Debug.Log(isMouseEnabled);
+		Debug.Log(gm.gameData.useMouse);
+		isMouseEnabled = gm.gameData.useMouse;
+		Debug.Log(isMouseEnabled);
+		Debug.Log(gm.gameData.useMouse);
 	}
 
 	private void UpdateSettings() {

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu:MonoBehaviour {
 	
@@ -15,6 +16,18 @@ public class MainMenu:MonoBehaviour {
 	private GameObject options_Audio;
 	[SerializeField]
 	private GameObject options_Controls;
+
+	private JsonData gm;
+
+	[Header("Config")]
+	[SerializeField]
+	private Toggle toggle1;
+
+	private void Start() {
+		gm = GameObject.Find("_GameManager").GetComponent<JsonData>();
+		gm.ReadConfig();
+		toggle1.isOn = gm.gameData.useMouse;
+	}
 
 	public void NewGame() {
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -71,6 +84,11 @@ public class MainMenu:MonoBehaviour {
 		options_Audio.SetActive(false);
 		options_Controls.SetActive(true);
 		options.SetActive(false);
+	}
+
+	public void Controls_UseMouse() {
+		gm.gameData.useMouse = toggle1.isOn;
+		gm.SaveConfig();
 	}
 
 	public void Quit() {
