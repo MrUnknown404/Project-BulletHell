@@ -8,10 +8,8 @@ public class PlayerCtrl : MonoBehaviour {
 	public bool isMouseEnabled;
 	public bool lockCursor = true;
 	public bool isAutoFireOn = true;
-
-	private float timeLeft;
+	
 	private float fireRate;
-	private bool startTimer = false;
 
 	private PlayerMotor motor;
 	private GunCtrl gun;
@@ -20,7 +18,6 @@ public class PlayerCtrl : MonoBehaviour {
 		motor = GetComponent<PlayerMotor>();
 		gun = GetComponent<GunCtrl>();
 		fireRate = gun.fireRate;
-		timeLeft = gun.fireRate;
 		UpdateSettings();
 	}
 
@@ -39,23 +36,13 @@ public class PlayerCtrl : MonoBehaviour {
 			Cursor.lockState = CursorLockMode.None;
 		}
 
-		if (isAutoFireOn == true && startTimer == false) {
-			gun.Shoot();
-			startTimer = true;
-		} else if(isAutoFireOn == false && startTimer == false) {
-			if (Input.GetButton("Mouse_0")) {
-				gun.Shoot();
-				startTimer = true;
-			}
-		}
-
-		//Timer
-		if (startTimer == true) {
-			timeLeft -= Time.fixedDeltaTime;
-			timeLeft = Mathf.Clamp(timeLeft, 0, fireRate);
-			if (timeLeft == 0) {
-				timeLeft = fireRate;
-				startTimer = false;
+		if (isAutoFireOn == true) {
+			InvokeRepeating("Shoot", 0, fireRate);
+		} else if (isAutoFireOn == false) {
+			if (Input.GetButtonDown("Mouse_0")) {
+				InvokeRepeating("Shoot", 0, fireRate);
+			} else if (Input.GetButtonUp("Mouse_0")) {
+				CancelInvoke("Shoot");
 			}
 		}
 
@@ -68,5 +55,9 @@ public class PlayerCtrl : MonoBehaviour {
 		Vector3 _velocity = (_movHorz + _movVert).normalized * speed;
 
 		motor.Move(_velocity);
+	}
+
+	private void Shoot() {
+		gun.Shoot();
 	}
 }

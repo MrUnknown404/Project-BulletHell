@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BulletCtrl : MonoBehaviour {
 
-	private float lifeTime = 4f;
+	private float lifeTime = 5f;
 	private float lifeTimeCounter;
 
 	public float speed;
@@ -11,9 +11,9 @@ public class BulletCtrl : MonoBehaviour {
 	public bool isHoming;
 	private bool shouldBeHoming;
 
-	void Start() {
+	private void Start() {
 		lifeTimeCounter = lifeTime;
-		float _val = Random.Range(0.3f,0.4f);
+		float _val = Random.Range(0.15f,0.25f);
 		if (isHoming == true) {
 			StartCoroutine("HomingStarter", _val);
 		}
@@ -24,12 +24,29 @@ public class BulletCtrl : MonoBehaviour {
 		shouldBeHoming = true;
 	}
 
+	public GameObject FindClosestEnemy() {
+		GameObject[] enemies;
+		enemies = GameObject.FindGameObjectsWithTag("Enemy");
+		GameObject closest = null;
+		float distance = Mathf.Infinity;
+		Vector3 position = transform.position;
+		foreach (GameObject enemy in enemies) {
+			Vector3 diff = enemy.transform.position - position;
+			float curDistance = diff.sqrMagnitude;
+			if (curDistance < distance) {
+				closest = enemy;
+				distance = curDistance;
+			}
+		}
+		return closest;
+	}
+
 	void Update() {
 		if (shouldBeHoming == false) {
 			transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
 		} else {
 			if (GameObject.FindGameObjectWithTag("Enemy") != null) {
-				transform.position = Vector3.MoveTowards(this.transform.position, GameObject.FindGameObjectWithTag("Enemy").transform.position, speed / 50);
+				transform.position = Vector3.MoveTowards(this.transform.position, FindClosestEnemy().transform.position, speed / 50);
 			} else {
 				transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
 			}

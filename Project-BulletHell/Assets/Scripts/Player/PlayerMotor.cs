@@ -37,7 +37,7 @@ public class PlayerMotor : MonoBehaviour {
 
 			p = c.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, c.nearClipPlane));
 
-			float _mul = 81.5f;
+			float _mul = 81.75f;
 			rb.MovePosition(new Vector3(p.x * _mul, 0f, -p.z * _mul));
 		}
 	}
