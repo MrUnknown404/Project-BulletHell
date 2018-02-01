@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class MainMenu:MonoBehaviour {
 	
 	[SerializeField]
-	private GameObject mainMenu;
+	private GameObject mainMenuOptions;
 	[SerializeField]
 	private GameObject options;
 	[SerializeField]
@@ -22,11 +22,14 @@ public class MainMenu:MonoBehaviour {
 	[Header("Config")]
 	[SerializeField]
 	private Toggle toggle1;
+	[SerializeField]
+	private Toggle toggle2;
 
 	private void Start() {
 		gm = GameObject.Find("_GameManager").GetComponent<JsonData>();
 		gm.ReadConfig();
 		toggle1.isOn = gm.gameData.useMouse;
+		toggle2.isOn = gm.gameData.useAutoFire;
 	}
 
 	public void NewGame() {
@@ -42,7 +45,7 @@ public class MainMenu:MonoBehaviour {
 	}
 
 	public void Options() {
-		mainMenu.SetActive(false);
+		mainMenuOptions.SetActive(false);
 		options_Game.SetActive(false);
 		options_Graphics.SetActive(false);
 		options_Audio.SetActive(false);
@@ -51,7 +54,7 @@ public class MainMenu:MonoBehaviour {
 	}
 
 	public void Options_Game() {
-		mainMenu.SetActive(false);
+		mainMenuOptions.SetActive(false);
 		options_Game.SetActive(true);
 		options_Graphics.SetActive(false);
 		options_Audio.SetActive(false);
@@ -60,7 +63,7 @@ public class MainMenu:MonoBehaviour {
 	}
 
 	public void Options_Graphics() {
-		mainMenu.SetActive(false);
+		mainMenuOptions.SetActive(false);
 		options_Game.SetActive(false);
 		options_Graphics.SetActive(true);
 		options_Audio.SetActive(false);
@@ -69,7 +72,7 @@ public class MainMenu:MonoBehaviour {
 	}
 
 	public void Options_Audio() {
-		mainMenu.SetActive(false);
+		mainMenuOptions.SetActive(false);
 		options_Game.SetActive(false);
 		options_Graphics.SetActive(false);
 		options_Audio.SetActive(true);
@@ -78,7 +81,7 @@ public class MainMenu:MonoBehaviour {
 	}
 
 	public void Options_Controls() {
-		mainMenu.SetActive(false);
+		mainMenuOptions.SetActive(false);
 		options_Game.SetActive(false);
 		options_Graphics.SetActive(false);
 		options_Audio.SetActive(false);
@@ -86,8 +89,22 @@ public class MainMenu:MonoBehaviour {
 		options.SetActive(false);
 	}
 
+	public void Options_Reset() {
+		mainMenuOptions.SetActive(true);
+		options_Game.SetActive(false);
+		options_Graphics.SetActive(false);
+		options_Audio.SetActive(false);
+		options_Controls.SetActive(false);
+		options.SetActive(false);
+	}
+
 	public void Controls_UseMouse() {
 		gm.gameData.useMouse = toggle1.isOn;
+		gm.SaveConfig();
+	}
+
+	public void Controls_UseAutoFire() {
+		gm.gameData.useAutoFire = toggle2.isOn;
 		gm.SaveConfig();
 	}
 

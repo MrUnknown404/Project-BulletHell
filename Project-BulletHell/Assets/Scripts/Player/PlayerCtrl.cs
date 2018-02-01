@@ -8,10 +8,10 @@ public class PlayerCtrl : MonoBehaviour {
 	public int maxBombCount = 3;
 	public int bombCount;
 	public bool lockCursor = true;
-	public bool isAutoFireOn = true;
 	
 	private float fireRate;
 	private bool isMouseEnabled;
+	private bool isAutoFireOn;
 
 	private PlayerMotor motor;
 	private GunCtrl gun;
@@ -28,15 +28,24 @@ public class PlayerCtrl : MonoBehaviour {
 		gm.ReadConfig();
 
 		gm.ReadConfig();
-		Debug.Log(isMouseEnabled);
-		Debug.Log(gm.gameData.useMouse);
 		isMouseEnabled = gm.gameData.useMouse;
-		Debug.Log(isMouseEnabled);
-		Debug.Log(gm.gameData.useMouse);
+		isAutoFireOn = gm.gameData.useAutoFire;
 	}
 
 	private void UpdateSettings() {
-		motor.isMouseEnabled = isMouseEnabled;
+		if (motor.isMouseEnabled != isMouseEnabled) {
+			motor.isMouseEnabled = isMouseEnabled;
+		}
+
+		if (isAutoFireOn == true && !IsInvoking("Shoot")) {
+			InvokeRepeating("Shoot", 0, fireRate);
+		} else if (isAutoFireOn == false) {
+			if (Input.GetButtonDown("Mouse_0")) {
+				InvokeRepeating("Shoot", 0, fireRate);
+			} else if (Input.GetButtonUp("Mouse_0")) {
+				CancelInvoke("Shoot");
+			}
+		}
 	}
 
 	private void OnTriggerEnter(Collider col) {
@@ -46,9 +55,7 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 
 	private void Update() {
-		if (motor.isMouseEnabled != isMouseEnabled) {
-			UpdateSettings();
-		}
+		UpdateSettings();
 
 		if (Cursor.lockState == CursorLockMode.None && lockCursor == true) {
 			Cursor.lockState = CursorLockMode.Confined;
@@ -64,16 +71,6 @@ public class PlayerCtrl : MonoBehaviour {
 			GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
 			foreach (GameObject bullet in bullets) {
 				Destroy(bullet.gameObject);
-			}
-		}
-
-		if (isAutoFireOn == true) {
-			InvokeRepeating("Shoot", 0, fireRate);
-		} else if (isAutoFireOn == false) {
-			if (Input.GetButtonDown("Mouse_0")) {
-				InvokeRepeating("Shoot", 0, fireRate);
-			} else if (Input.GetButtonUp("Mouse_0")) {
-				CancelInvoke("Shoot");
 			}
 		}
 
