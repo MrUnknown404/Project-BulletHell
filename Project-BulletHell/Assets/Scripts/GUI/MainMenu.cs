@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -25,14 +26,50 @@ public class MainMenu:MonoBehaviour {
 	[SerializeField]
 	private Toggle toggle2;
 	[SerializeField]
+	private Toggle toggle3;
+	[SerializeField]
 	private Slider slider1;
+	[SerializeField]
+	private Dropdown dropdown1;
+
+	public Resolution[] resolutions;
 
 	private void Start() {
 		gm = GameObject.Find("_GameManager").GetComponent<JsonData>();
 		gm.ReadConfig();
+
 		toggle1.isOn = gm.gameData.useMouse;
 		toggle2.isOn = gm.gameData.useAutoFire;
+		toggle3.isOn = gm.gameData.isFullscreen;
 		slider1.value = gm.gameData.moveSpeed;
+
+		//Res
+		resolutions = Screen.resolutions;
+		dropdown1.ClearOptions();
+
+		List<string> options = new List<string>();
+
+		int currentResIndex = 0;
+		for (int i = 0; i < resolutions.Length; i++) {
+			string option = resolutions[i].width + " x " + resolutions[i].height;
+			options.Add(option);
+			
+			if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height) {
+				currentResIndex = i;
+			}
+		}
+
+		dropdown1.AddOptions(options);
+		if (gm.gameData.res == 0 && currentResIndex != 0) {
+			dropdown1.value = currentResIndex;
+		} else if (currentResIndex == 0) {
+			dropdown1.value = currentResIndex;
+		} else {
+			dropdown1.value = gm.gameData.res;
+		}
+		dropdown1.RefreshShownValue();
+
+		Graphics_SetRes(gm.gameData.res);
 	}
 
 	public void NewGame() {
@@ -113,6 +150,21 @@ public class MainMenu:MonoBehaviour {
 
 	public void Controls_UseAutoFire() {
 		gm.gameData.useAutoFire = toggle2.isOn;
+		gm.SaveConfig();
+	}
+
+	public void Graphics_SetFullScreen() {
+		gm.gameData.isFullscreen = toggle3.isOn;
+		gm.SaveConfig();
+
+		Screen.fullScreen = gm.gameData.isFullscreen;
+	}
+
+	public void Graphics_SetRes(int resIndex) {
+		Resolution resolution = resolutions[resIndex];
+		Screen.SetResolution(resolution.width, resolution.height, gm.gameData.isFullscreen);
+
+		gm.gameData.res = resIndex;
 		gm.SaveConfig();
 	}
 

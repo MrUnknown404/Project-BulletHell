@@ -11,9 +11,14 @@ public class JsonData : MonoBehaviour {
 		//Set Defaults
 		if (!System.IO.File.Exists(path)) {
 			Debug.LogWarning(System.Math.Round(Time.time, 2) + ": No config file found. creating config file...");
+
 			gameData.useMouse = true;
 			gameData.useAutoFire = true;
 			gameData.moveSpeed = 12.5f;
+
+			gameData.isFullscreen = true;
+			gameData.res = 0;
+
 			SaveConfig();
 		} else {
 			Debug.Log(System.Math.Round(Time.time, 2) + ": Config file found!");
