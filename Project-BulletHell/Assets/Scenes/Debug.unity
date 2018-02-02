@@ -86,7 +86,7 @@ LightmapSettings:
     m_PVRFilteringAtrousColorSigma: 1
     m_PVRFilteringAtrousNormalSigma: 1
     m_PVRFilteringAtrousPositionSigma: 1
-  m_LightingDataAsset: {fileID: 112000002, guid: a096d66fe728e0348b3f9c5e89fd8c29,
+  m_LightingDataAsset: {fileID: 112000002, guid: 183cf1a7def4a7549a8135412feadbe0,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -182,12 +182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd5c8200ec61a6949973bd739f0118bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
   maxBombCount: 3
   bombCount: 0
-  isMouseEnabled: 1
   lockCursor: 1
-  isAutoFireOn: 0
 --- !u!114 &215026779
 MonoBehaviour:
   m_ObjectHideFlags: 0
