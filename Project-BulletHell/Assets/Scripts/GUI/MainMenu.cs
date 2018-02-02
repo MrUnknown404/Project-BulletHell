@@ -24,12 +24,15 @@ public class MainMenu:MonoBehaviour {
 	private Toggle toggle1;
 	[SerializeField]
 	private Toggle toggle2;
+	[SerializeField]
+	private Slider slider1;
 
 	private void Start() {
 		gm = GameObject.Find("_GameManager").GetComponent<JsonData>();
 		gm.ReadConfig();
 		toggle1.isOn = gm.gameData.useMouse;
 		toggle2.isOn = gm.gameData.useAutoFire;
+		slider1.value = gm.gameData.moveSpeed;
 	}
 
 	public void NewGame() {
@@ -96,6 +99,11 @@ public class MainMenu:MonoBehaviour {
 		options_Audio.SetActive(false);
 		options_Controls.SetActive(false);
 		options.SetActive(false);
+	}
+
+	public void Controls_MoveSpeed() {
+		gm.gameData.moveSpeed = slider1.value;
+		gm.SaveConfig();
 	}
 
 	public void Controls_UseMouse() {

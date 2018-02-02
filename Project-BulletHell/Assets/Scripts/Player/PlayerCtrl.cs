@@ -3,12 +3,12 @@
 [RequireComponent(typeof(PlayerMotor))]
 [RequireComponent(typeof(GunCtrl))]
 public class PlayerCtrl : MonoBehaviour {
-
-	public float speed = 12f;
+	
 	public int maxBombCount = 3;
 	public int bombCount;
 	public bool lockCursor = true;
-	
+
+	private float speed;
 	private float fireRate;
 	private bool isMouseEnabled;
 	private bool isAutoFireOn;
@@ -28,6 +28,7 @@ public class PlayerCtrl : MonoBehaviour {
 		gm.ReadConfig();
 
 		gm.ReadConfig();
+		speed = gm.gameData.moveSpeed;
 		isMouseEnabled = gm.gameData.useMouse;
 		isAutoFireOn = gm.gameData.useAutoFire;
 	}

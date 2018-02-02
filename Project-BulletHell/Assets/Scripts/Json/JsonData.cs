@@ -10,9 +10,10 @@ public class JsonData : MonoBehaviour {
 		path = Application.persistentDataPath + "/Config.json";
 		//Set Defaults
 		if (!System.IO.File.Exists(path)) {
-			Debug.Log(System.Math.Round(Time.time, 2) + ": No config file found. creating config file...");
+			Debug.LogWarning(System.Math.Round(Time.time, 2) + ": No config file found. creating config file...");
 			gameData.useMouse = true;
 			gameData.useAutoFire = true;
+			gameData.moveSpeed = 12.5f;
 			SaveConfig();
 		} else {
 			Debug.Log(System.Math.Round(Time.time, 2) + ": Config file found!");

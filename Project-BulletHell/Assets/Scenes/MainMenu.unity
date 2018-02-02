@@ -8228,7 +8228,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 888434213}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0
+  m_Size: 0.24291667
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -10105,7 +10105,18 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1853499136}
+        m_MethodName: Controls_MoveSpeed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &1410949037
@@ -12525,6 +12536,7 @@ MonoBehaviour:
   options_Controls: {fileID: 1625043272}
   toggle1: {fileID: 1963413458}
   toggle2: {fileID: 743021722}
+  slider1: {fileID: 1394365187}
 --- !u!1 &1857638175
 GameObject:
   m_ObjectHideFlags: 0
@@ -13971,6 +13983,7 @@ MonoBehaviour:
   gameData:
     useMouse: 0
     useAutoFire: 0
+    moveSpeed: 0
 --- !u!4 &2103873990
 Transform:
   m_ObjectHideFlags: 0
