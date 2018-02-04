@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -43,13 +44,15 @@ public class MainMenu:MonoBehaviour {
 		toggle3.isOn = gm.gameData.isFullscreen;
 		slider1.value = gm.gameData.moveSpeed;
 
-		//Res
-		resolutions = Screen.resolutions;
-		dropdown1.ClearOptions();
+		Screen.fullScreen = gm.gameData.isFullscreen;
 
+		//Resolution
+		resolutions = Screen.resolutions.Select(resolution => new Resolution { width = resolution.width, height = resolution.height }).Distinct().ToArray();
 		List<string> options = new List<string>();
-
 		int currentResIndex = 0;
+
+		dropdown1.ClearOptions();
+		
 		for (int i = 0; i < resolutions.Length; i++) {
 			string option = resolutions[i].width + " x " + resolutions[i].height;
 			options.Add(option);
@@ -60,16 +63,15 @@ public class MainMenu:MonoBehaviour {
 		}
 
 		dropdown1.AddOptions(options);
-		if (gm.gameData.res == 0 && currentResIndex != 0) {
-			dropdown1.value = currentResIndex;
-		} else if (currentResIndex == 0) {
-			dropdown1.value = currentResIndex;
-		} else {
-			dropdown1.value = gm.gameData.res;
-		}
-		dropdown1.RefreshShownValue();
 
-		Graphics_SetRes(gm.gameData.res);
+		if (gm.gameData.resolution == -1) {
+			dropdown1.value = currentResIndex;
+		}else {
+			dropdown1.value = gm.gameData.resolution;
+		}
+
+		dropdown1.RefreshShownValue();
+		Graphics_SetRes(gm.gameData.resolution);
 	}
 
 	public void NewGame() {
@@ -164,7 +166,7 @@ public class MainMenu:MonoBehaviour {
 		Resolution resolution = resolutions[resIndex];
 		Screen.SetResolution(resolution.width, resolution.height, gm.gameData.isFullscreen);
 
-		gm.gameData.res = resIndex;
+		gm.gameData.resolution = resIndex;
 		gm.SaveConfig();
 	}
 

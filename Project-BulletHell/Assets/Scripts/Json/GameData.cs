@@ -12,5 +12,5 @@ public class GameData {
 
 	//Graphics
 	public bool isFullscreen;
-	public int res;
+	public int resolution;
 }

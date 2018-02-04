@@ -17,7 +17,7 @@ public class JsonData : MonoBehaviour {
 			gameData.moveSpeed = 12.5f;
 
 			gameData.isFullscreen = true;
-			gameData.res = 0;
+			gameData.resolution = -1;
 
 			SaveConfig();
 		} else {
@@ -26,7 +26,7 @@ public class JsonData : MonoBehaviour {
 	}
 
 	public void SaveConfig() {
-		string contents = JsonUtility.ToJson(gameData);
+		string contents = JsonUtility.ToJson(gameData, true);
 		System.IO.File.WriteAllText(path, contents);
 	}
 
