@@ -3,7 +3,10 @@
 [RequireComponent(typeof(PlayerMotor))]
 [RequireComponent(typeof(GunCtrl))]
 public class PlayerCtrl : MonoBehaviour {
-	
+
+	[SerializeField]
+	private GameObject deathGUI;
+
 	public int maxBombCount = 3;
 	public int bombCount;
 	public bool lockCursor = true;
@@ -15,22 +18,27 @@ public class PlayerCtrl : MonoBehaviour {
 
 	private PlayerMotor motor;
 	private GunCtrl gun;
-	private JsonData gm;
+	private JsonData js;
+	private GameManager gm;
 
 	private void Start() {
 		motor = GetComponent<PlayerMotor>();
 		gun = GetComponent<GunCtrl>();
+		gm = GameObject.Find("_GameManager").GetComponent<GameManager>();
 		fireRate = gun.fireRate;
 		bombCount = maxBombCount;
 		UpdateSettings();
 
-		gm = GameObject.Find("_GameManager").GetComponent<JsonData>();
-		gm.ReadConfig();
+		js = GameObject.Find("_GameManager").GetComponent<JsonData>();
+		if (js == null) {
+			Debug.LogError(System.Math.Round(Time.time, 2) + ": PlayerCtrl: Cannot Find _GameManager (Probably switches scenes incorrectly)");
+		}
+		js.ReadConfig();
 
-		gm.ReadConfig();
-		speed = gm.gameData.moveSpeed;
-		isMouseEnabled = gm.gameData.useMouse;
-		isAutoFireOn = gm.gameData.useAutoFire;
+		js.ReadConfig();
+		speed = js.configData.moveSpeed;
+		isMouseEnabled = js.configData.useMouse;
+		isAutoFireOn = js.configData.useAutoFire;
 	}
 
 	private void UpdateSettings() {
@@ -51,6 +59,9 @@ public class PlayerCtrl : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider col) {
 		if (col.gameObject.tag == "EnemyBullet") {
+			Debug.Log(System.Math.Round(Time.time, 2) + ": PlayerCtrl: Player Killed!");
+			gm.OnDeath(deathGUI);
+
 			Destroy(this.gameObject);
 		}
 	}

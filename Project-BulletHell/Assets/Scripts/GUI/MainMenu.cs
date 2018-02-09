@@ -19,7 +19,7 @@ public class MainMenu:MonoBehaviour {
 	[SerializeField]
 	private GameObject options_Controls;
 
-	private JsonData gm;
+	private JsonData js;
 
 	[Header("Config")]
 	[SerializeField]
@@ -36,15 +36,18 @@ public class MainMenu:MonoBehaviour {
 	public Resolution[] resolutions;
 
 	private void Start() {
-		gm = GameObject.Find("_GameManager").GetComponent<JsonData>();
-		gm.ReadConfig();
+		js = GameObject.Find("_GameManager").GetComponent<JsonData>();
+		if (js == null) {
+			Debug.LogError(System.Math.Round(Time.time, 2) + ": PlayerCtrl: Cannot Find _GameManager (Probably switched scenes incorrectly)");
+		}
+		js.ReadConfig();
 
-		toggle1.isOn = gm.gameData.useMouse;
-		toggle2.isOn = gm.gameData.useAutoFire;
-		toggle3.isOn = gm.gameData.isFullscreen;
-		slider1.value = gm.gameData.moveSpeed;
+		toggle1.isOn = js.configData.useMouse;
+		toggle2.isOn = js.configData.useAutoFire;
+		toggle3.isOn = js.configData.isFullscreen;
+		slider1.value = js.configData.moveSpeed;
 
-		Screen.fullScreen = gm.gameData.isFullscreen;
+		Screen.fullScreen = js.configData.isFullscreen;
 
 		//Resolution
 		resolutions = Screen.resolutions.Select(resolution => new Resolution { width = resolution.width, height = resolution.height }).Distinct().ToArray();
@@ -64,26 +67,19 @@ public class MainMenu:MonoBehaviour {
 
 		dropdown1.AddOptions(options);
 
-		if (gm.gameData.resolution == -1) {
+		if (js.configData.resolution == -1) {
 			dropdown1.value = currentResIndex;
 		}else {
-			dropdown1.value = gm.gameData.resolution;
+			dropdown1.value = js.configData.resolution;
 		}
 
 		dropdown1.RefreshShownValue();
-		Graphics_SetRes(gm.gameData.resolution);
+		Graphics_SetRes(js.configData.resolution);
 	}
 
 	public void NewGame() {
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-	}
-
-	public void LoadGame() {
-	
-	}
-
-	public void LevelSelect() {
-	
+		//for now just load that scene
+		SceneManager.LoadScene("MainHub");
 	}
 
 	public void Options() {
@@ -141,33 +137,33 @@ public class MainMenu:MonoBehaviour {
 	}
 
 	public void Controls_MoveSpeed() {
-		gm.gameData.moveSpeed = slider1.value;
-		gm.SaveConfig();
+		js.configData.moveSpeed = slider1.value;
+		js.SaveConfig();
 	}
 
 	public void Controls_UseMouse() {
-		gm.gameData.useMouse = toggle1.isOn;
-		gm.SaveConfig();
+		js.configData.useMouse = toggle1.isOn;
+		js.SaveConfig();
 	}
 
 	public void Controls_UseAutoFire() {
-		gm.gameData.useAutoFire = toggle2.isOn;
-		gm.SaveConfig();
+		js.configData.useAutoFire = toggle2.isOn;
+		js.SaveConfig();
 	}
 
 	public void Graphics_SetFullScreen() {
-		gm.gameData.isFullscreen = toggle3.isOn;
-		gm.SaveConfig();
+		js.configData.isFullscreen = toggle3.isOn;
+		js.SaveConfig();
 
-		Screen.fullScreen = gm.gameData.isFullscreen;
+		Screen.fullScreen = js.configData.isFullscreen;
 	}
 
 	public void Graphics_SetRes(int resIndex) {
-		Resolution resolution = resolutions[resIndex];
-		Screen.SetResolution(resolution.width, resolution.height, gm.gameData.isFullscreen);
+		Resolution _resolution = resolutions[resIndex];
+		Screen.SetResolution(_resolution.width, _resolution.height, js.configData.isFullscreen);
 
-		gm.gameData.resolution = resIndex;
-		gm.SaveConfig();
+		js.configData.resolution = resIndex;
+		js.SaveConfig();
 	}
 
 	public void Quit() {
