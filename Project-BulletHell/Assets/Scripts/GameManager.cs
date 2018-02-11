@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour {
 
 	private void Awake() {
 		if (gm != null) {
-			Debug.LogError(System.Math.Round(Time.time, 2) + ": GameManager: More than one GameManager in scene!");
+			//Debug.LogError(System.Math.Round(Time.time, 2) + ": GameManager: More than one GameManager in scene!");
 			Destroy(this.gameObject);
 		} else {
 			gm = this;

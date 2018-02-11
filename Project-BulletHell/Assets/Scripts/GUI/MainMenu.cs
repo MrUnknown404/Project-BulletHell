@@ -51,21 +51,21 @@ public class MainMenu:MonoBehaviour {
 
 		//Resolution
 		resolutions = Screen.resolutions.Select(resolution => new Resolution { width = resolution.width, height = resolution.height }).Distinct().ToArray();
-		List<string> options = new List<string>();
+		List<string> _options = new List<string>();
 		int currentResIndex = 0;
 
 		dropdown1.ClearOptions();
 		
 		for (int i = 0; i < resolutions.Length; i++) {
-			string option = resolutions[i].width + " x " + resolutions[i].height;
-			options.Add(option);
+			string _option = resolutions[i].width + " x " + resolutions[i].height;
+			_options.Add(_option);
 			
 			if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height) {
 				currentResIndex = i;
 			}
 		}
 
-		dropdown1.AddOptions(options);
+		dropdown1.AddOptions(_options);
 
 		if (js.configData.resolution == -1) {
 			dropdown1.value = currentResIndex;

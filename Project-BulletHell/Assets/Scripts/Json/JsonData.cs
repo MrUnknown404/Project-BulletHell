@@ -31,20 +31,13 @@ public class JsonData : MonoBehaviour {
 		if (!System.IO.File.Exists(path2)) {
 			Debug.LogWarning(System.Math.Round(Time.time, 2) + ": No save file found. creating save file...");
 
+			saveData.bombCountUpgradeAmount = 0;
 			saveData.damageUpgradeAmount = 0;
 			saveData.firerateUpgradeAmount = 0;
-			saveData.hasWeapon_Normal = true;
-			saveData.hasWeapon_Homing1x = false;
-			saveData.hasWeapon_Homing2x = false;
-			saveData.hasWeapon_Homing3x = false;
-			saveData.hasWeapon_Homing4x = false;
-			saveData.hasWeapon_Homing5x = false;
-			saveData.hasWeapon_Spread2x = false;
-			saveData.hasWeapon_Spread3x = false;
-			saveData.hasWeapon_Spread4x = false;
-			saveData.hasWeapon_Spread5x = false;
-			saveData.hasWeapon_Spread6x = false;
-			saveData.hasWeapon_Spread7x = false;
+
+			saveData.weaponsBought = new bool[System.Enum.GetValues(typeof(SaveData.WeaponType)).Length];
+			saveData.weaponsBought[0] = true;
+			saveData.selectedWeapon = 0;
 
 			SaveGame();
 		} else {

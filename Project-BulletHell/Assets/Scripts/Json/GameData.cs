@@ -1,4 +1,6 @@
-﻿[System.Serializable]
+﻿using System.Collections.Generic;
+
+[System.Serializable]
 public class ConfigData {
 
 	//Game
@@ -17,22 +19,14 @@ public class ConfigData {
 public class SaveData {
 
 	//Upgrades
+	public int bombCountUpgradeAmount;
 	public int damageUpgradeAmount;
 	public int firerateUpgradeAmount;
-	public bool hasWeapon_Normal;
-	public bool hasWeapon_Homing1x;
-	public bool hasWeapon_Homing2x;
-	public bool hasWeapon_Homing3x;
-	public bool hasWeapon_Homing4x;
-	public bool hasWeapon_Homing5x;
-	public bool hasWeapon_Spread2x;
-	public bool hasWeapon_Spread3x;
-	public bool hasWeapon_Spread4x;
-	public bool hasWeapon_Spread5x;
-	public bool hasWeapon_Spread6x;
-	public bool hasWeapon_Spread7x;
 
-	public enum SelectedWeapon {
+	public bool[] weaponsBought;
+	public int selectedWeapon;
+
+	public enum WeaponType {
 		Normal,
 		Homing1x,
 		Homing2x,
@@ -47,5 +41,5 @@ public class SaveData {
 		Spread7x
 	};
 
-	public SelectedWeapon selectedWeapon;
+	public WeaponType weaponType;
 }
