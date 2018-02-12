@@ -1,11 +1,10 @@
 fileFormatVersion: 2
-guid: d81a3be2567b883488fb3524416e4640
-timeCreated: 1517555156
-licenseType: Free
+guid: 674acc1594303ba42821732654d65063
 TextureImporter:
   fileIDToRecycleName:
     8900000: generatedCubemap
-  serializedVersion: 4
+  externalObjects: {}
+  serializedVersion: 5
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
@@ -52,23 +51,33 @@ TextureImporter:
   spriteTessellationDetail: -1
   textureType: 0
   textureShape: 2
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 100
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

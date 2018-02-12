@@ -31,13 +31,7 @@ public class GunCtrl:MonoBehaviour {
 		UpdateWeapon();
 		UpdateSettings();
 	}
-
-	private void Update() {
-		//change to when weapon change run this
-		UpdateWeapon();
-		UpdateSettings();
-	}
-
+	
 	private void UpdateSettings() {
 		if (isUsingHoming == true) {
 			damageReal = (((damage + ((amountOfBullets - 1) * 10)) * damageMulti) / amountOfBullets) * 0.6f;

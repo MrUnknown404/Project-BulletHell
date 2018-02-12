@@ -40,6 +40,4 @@ public class SaveData {
 		Spread6x,
 		Spread7x
 	};
-
-	public WeaponType weaponType;
 }
