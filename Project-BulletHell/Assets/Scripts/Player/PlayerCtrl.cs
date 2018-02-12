@@ -63,10 +63,29 @@ public class PlayerCtrl : MonoBehaviour {
 			gm.OnDeath(deathGUI);
 
 			Destroy(this.gameObject);
+		} else if (col.gameObject.tag == "Enemy") {
+			Debug.Log(System.Math.Round(Time.time, 2) + ": PlayerCtrl: Player Killed!");
+			gm.OnDeath(deathGUI);
+
+			Destroy(this.gameObject);
 		}
 	}
 
 	private void Update() {
+		if (Input.GetButtonDown("Key_Bomb")) {
+			if (bombCount <= 0) {
+				return;
+			}
+			bombCount--;
+
+			GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
+			foreach (GameObject bullet in bullets) {
+				Destroy(bullet.gameObject);
+			}
+		}
+	}
+
+	private void FixedUpdate() {
 		UpdateSettings();
 
 		if (Cursor.lockState == CursorLockMode.None && lockCursor == true) {
@@ -74,18 +93,7 @@ public class PlayerCtrl : MonoBehaviour {
 		} else if (Cursor.lockState == CursorLockMode.Confined && lockCursor == false) {
 			Cursor.lockState = CursorLockMode.None;
 		}
-
-		if (Input.GetButtonDown("Key_Bomb")) {
-			if (bombCount <= 0) {
-				return;
-			}
-			bombCount--;
-			GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
-			foreach (GameObject bullet in bullets) {
-				Destroy(bullet.gameObject);
-			}
-		}
-
+		
 		float _xMov = Input.GetAxisRaw("Key_Horizontal");
 		float _zMov = Input.GetAxisRaw("Key_Vertical");
 

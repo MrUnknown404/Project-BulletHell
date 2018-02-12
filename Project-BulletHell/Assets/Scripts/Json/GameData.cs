@@ -13,6 +13,7 @@ public class ConfigData {
 	//Graphics
 	public bool isFullscreen;
 	public int resolution;
+	public int quality;
 }
 
 [System.Serializable]

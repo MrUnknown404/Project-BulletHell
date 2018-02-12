@@ -41,7 +41,7 @@ public class BulletCtrl : MonoBehaviour {
 		return closest;
 	}
 
-	void Update() {
+	void FixedUpdate() {
 		if (shouldBeHoming == false) {
 			transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
 		} else {

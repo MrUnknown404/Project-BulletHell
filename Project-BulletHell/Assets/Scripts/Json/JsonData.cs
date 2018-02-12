@@ -14,7 +14,7 @@ public class JsonData : MonoBehaviour {
 
 		//Set Defaults for Config
 		if (!System.IO.File.Exists(path)) {
-			Debug.LogWarning(System.Math.Round(Time.time, 2) + ": No config file found. creating config file...");
+			Debug.LogWarning(System.Math.Round(Time.time, 2) + ": No config file found. creating config file... : " + path);
 
 			configData.useMouse = true;
 			configData.useAutoFire = true;
@@ -22,14 +22,15 @@ public class JsonData : MonoBehaviour {
 
 			configData.isFullscreen = true;
 			configData.resolution = -1;
+			configData.quality = 0;
 
 			SaveConfig();
 		} else {
-			Debug.Log(System.Math.Round(Time.time, 2) + ": Config file found!");
+			Debug.Log(System.Math.Round(Time.time, 2) + ": Config file found! : " + path);
 		}
 		//Set Defaults for Save
 		if (!System.IO.File.Exists(path2)) {
-			Debug.LogWarning(System.Math.Round(Time.time, 2) + ": No save file found. creating save file...");
+			Debug.LogWarning(System.Math.Round(Time.time, 2) + ": No save file found. creating save file... : " + path2);
 
 			saveData.bombCountUpgradeAmount = 0;
 			saveData.damageUpgradeAmount = 0;
@@ -41,7 +42,7 @@ public class JsonData : MonoBehaviour {
 
 			SaveGame();
 		} else {
-			Debug.Log(System.Math.Round(Time.time, 2) + ": Save file found!");
+			Debug.Log(System.Math.Round(Time.time, 2) + ": Save file found! : " + path2);
 		}
 
 	}

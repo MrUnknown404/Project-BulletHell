@@ -23,7 +23,7 @@ public class EnemyBulletCtrl : MonoBehaviour {
 		shouldBeHoming = true;
 	}
 
-	void Update() {
+	void FixedUpdate() {
 		if (shouldBeHoming == false) {
 			transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
 		} else {

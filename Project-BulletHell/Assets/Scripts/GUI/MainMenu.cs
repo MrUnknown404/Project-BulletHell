@@ -32,6 +32,8 @@ public class MainMenu:MonoBehaviour {
 	private Slider slider1;
 	[SerializeField]
 	private Dropdown dropdown1;
+	[SerializeField]
+	private Dropdown dropdown2;
 
 	public Resolution[] resolutions;
 
@@ -46,7 +48,8 @@ public class MainMenu:MonoBehaviour {
 		toggle2.isOn = js.configData.useAutoFire;
 		toggle3.isOn = js.configData.isFullscreen;
 		slider1.value = js.configData.moveSpeed;
-
+		dropdown2.value = js.configData.quality;
+		
 		Screen.fullScreen = js.configData.isFullscreen;
 
 		//Resolution
@@ -74,6 +77,7 @@ public class MainMenu:MonoBehaviour {
 		}
 
 		dropdown1.RefreshShownValue();
+		dropdown2.RefreshShownValue();
 		Graphics_SetRes(js.configData.resolution);
 	}
 
@@ -158,12 +162,19 @@ public class MainMenu:MonoBehaviour {
 		Screen.fullScreen = js.configData.isFullscreen;
 	}
 
-	public void Graphics_SetRes(int resIndex) {
-		Resolution _resolution = resolutions[resIndex];
+	public void Graphics_SetRes(int _resIndex) {
+		Resolution _resolution = resolutions[_resIndex];
 		Screen.SetResolution(_resolution.width, _resolution.height, js.configData.isFullscreen);
 
-		js.configData.resolution = resIndex;
+		js.configData.resolution = _resIndex;
 		js.SaveConfig();
+	}
+
+	public void Graphics_SetQuality(int _quality) {
+		js.configData.quality = _quality;
+		js.SaveConfig();
+
+		QualitySettings.SetQualityLevel(_quality);
 	}
 
 	public void Quit() {
