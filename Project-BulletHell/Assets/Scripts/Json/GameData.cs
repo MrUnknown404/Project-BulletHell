@@ -23,6 +23,7 @@ public class SaveData {
 	public int bombCountUpgradeAmount;
 	public int damageUpgradeAmount;
 	public int firerateUpgradeAmount;
+	public int bulletSpeedUpgradeAmount;
 
 	public bool[] weaponsBought;
 	public int selectedWeapon;
@@ -41,4 +42,6 @@ public class SaveData {
 		Spread6x,
 		Spread7x
 	};
+
+	public WeaponType weaponType;
 }

@@ -45,16 +45,6 @@ public class PlayerCtrl : MonoBehaviour {
 		if (motor.isMouseEnabled != isMouseEnabled) {
 			motor.isMouseEnabled = isMouseEnabled;
 		}
-
-		if (isAutoFireOn == true && !IsInvoking("Shoot")) {
-			InvokeRepeating("Shoot", 0, fireRate);
-		} else if (isAutoFireOn == false) {
-			if (Input.GetButtonDown("Mouse_0")) {
-				InvokeRepeating("Shoot", 0, fireRate);
-			} else if (Input.GetButtonUp("Mouse_0")) {
-				CancelInvoke("Shoot");
-			}
-		}
 	}
 
 	private void OnTriggerEnter(Collider col) {
@@ -81,6 +71,16 @@ public class PlayerCtrl : MonoBehaviour {
 			GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
 			foreach (GameObject bullet in bullets) {
 				Destroy(bullet.gameObject);
+			}
+		}
+
+		if (isAutoFireOn == true && !IsInvoking("Shoot")) {
+			InvokeRepeating("Shoot", 0, fireRate);
+		} else if (isAutoFireOn == false) {
+			if (Input.GetButtonDown("Mouse_0") && !IsInvoking("Shoot")) {
+				InvokeRepeating("Shoot", 0, fireRate);
+			} else if (Input.GetButtonUp("Mouse_0")) {
+				CancelInvoke("Shoot");
 			}
 		}
 	}

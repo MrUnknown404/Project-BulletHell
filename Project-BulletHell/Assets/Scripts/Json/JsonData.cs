@@ -35,6 +35,7 @@ public class JsonData : MonoBehaviour {
 			saveData.bombCountUpgradeAmount = 0;
 			saveData.damageUpgradeAmount = 0;
 			saveData.firerateUpgradeAmount = 0;
+			saveData.bulletSpeedUpgradeAmount = 0;
 
 			saveData.weaponsBought = new bool[System.Enum.GetValues(typeof(SaveData.WeaponType)).Length];
 			saveData.weaponsBought[0] = true;

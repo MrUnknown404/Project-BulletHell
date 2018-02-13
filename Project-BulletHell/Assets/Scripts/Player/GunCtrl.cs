@@ -19,6 +19,8 @@ public class GunCtrl:MonoBehaviour {
 	[SerializeField]
 	private GameObject bullet1;
 
+	private Transform bulletHolder;
+
 	private JsonData js;
 
 	private void Start() {
@@ -27,7 +29,13 @@ public class GunCtrl:MonoBehaviour {
 			Debug.LogError(System.Math.Round(Time.time, 2) + ": PlayerCtrl: Cannot Find _GameManager (Probably switched scenes incorrectly)");
 		}
 		js.ReadConfig();
-		
+
+		SaveData.WeaponType _value = (SaveData.WeaponType)js.saveData.selectedWeapon;
+		js.saveData.weaponType = _value;
+
+		bulletHolder = GameObject.Find("BulletHolder").transform;
+		;
+
 		UpdateWeapon();
 		UpdateSettings();
 	}
@@ -41,224 +49,197 @@ public class GunCtrl:MonoBehaviour {
 	}
 
 	private void UpdateWeapon() {
-		if (js.saveData.selectedWeapon == 0) {
+		if (js.saveData.weaponType == SaveData.WeaponType.Normal) {
 			amountOfBullets = 1;
 			isUsingHoming = false;
-		} else if (js.saveData.selectedWeapon == 1) {
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing1x) {
 			amountOfBullets = 1;
 			isUsingHoming = true;
-		} else if (js.saveData.selectedWeapon == 2) {
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing2x) {
 			amountOfBullets = 2;
 			isUsingHoming = true;
-		} else if (js.saveData.selectedWeapon == 3) {
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing3x) {
 			amountOfBullets = 3;
 			isUsingHoming = true;
-		} else if (js.saveData.selectedWeapon == 4) {
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing4x) {
 			amountOfBullets = 4;
 			isUsingHoming = true;
-		} else if (js.saveData.selectedWeapon == 5) {
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing5x) {
 			amountOfBullets = 5;
 			isUsingHoming = true;
-		} else if (js.saveData.selectedWeapon == 6) {
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread2x) {
 			amountOfBullets = 2;
 			isUsingHoming = false;
-		} else if (js.saveData.selectedWeapon == 7) {
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread3x) {
 			amountOfBullets = 3;
 			isUsingHoming = false;
-		} else if (js.saveData.selectedWeapon == 8) {
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread4x) {
 			amountOfBullets = 4;
 			isUsingHoming = false;
-		} else if (js.saveData.selectedWeapon == 9) {
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread5x) {
 			amountOfBullets = 5;
 			isUsingHoming = false;
-		} else if (js.saveData.selectedWeapon == 10) {
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread6x) {
 			amountOfBullets = 6;
 			isUsingHoming = false;
-		} else if (js.saveData.selectedWeapon == 11) {
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread7x) {
 			amountOfBullets = 7;
 			isUsingHoming = false;
 		}
 	}
 	
 	public void Shoot() {
-		if (js.saveData.selectedWeapon == 0) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<BulletCtrl>().speed = speed;
-			sbullet0.GetComponent<BulletCtrl>().damage = damageReal;
-		} else if (js.saveData.selectedWeapon == 1) {
-			GameObject sbullet0 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<BulletCtrl>().speed = speed;
-			sbullet0.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet0.GetComponent<BulletCtrl>().isHoming = true;
-		} else if (js.saveData.selectedWeapon == 2) {
-			GameObject sbullet0 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<BulletCtrl>().speed = speed;
-			sbullet1.GetComponent<BulletCtrl>().speed = speed;
-			sbullet0.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet1.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 5f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -5f, 0f);
-		} else if (js.saveData.selectedWeapon == 3) {
-			GameObject sbullet0 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<BulletCtrl>().speed = speed;
-			sbullet1.GetComponent<BulletCtrl>().speed = speed;
-			sbullet2.GetComponent<BulletCtrl>().speed = speed;
-			sbullet0.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet1.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet2.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 10f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -10f, 0f);
-		} else if (js.saveData.selectedWeapon == 4) {
-			GameObject sbullet0 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet3 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<BulletCtrl>().speed = speed;
-			sbullet1.GetComponent<BulletCtrl>().speed = speed;
-			sbullet2.GetComponent<BulletCtrl>().speed = speed;
-			sbullet3.GetComponent<BulletCtrl>().speed = speed;
-			sbullet0.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet1.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet2.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet3.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 5f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -5f, 0f);
-			sbullet2.transform.rotation = Quaternion.Euler(0f, 15f, 0f);
-			sbullet3.transform.rotation = Quaternion.Euler(0f, -15f, 0f);
-		} else if (js.saveData.selectedWeapon == 5) {
-			GameObject sbullet0 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet3 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet4 = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<BulletCtrl>().speed = speed;
-			sbullet1.GetComponent<BulletCtrl>().speed = speed;
-			sbullet2.GetComponent<BulletCtrl>().speed = speed;
-			sbullet3.GetComponent<BulletCtrl>().speed = speed;
-			sbullet4.GetComponent<BulletCtrl>().speed = speed;
-			sbullet0.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet1.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet2.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet3.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet4.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 10f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -10f, 0f);
-			sbullet2.transform.rotation = Quaternion.Euler(0f, 20f, 0f);
-			sbullet3.transform.rotation = Quaternion.Euler(0f, -20f, 0f);
-		} else if (js.saveData.selectedWeapon == 6) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<BulletCtrl>().speed = speed;
-			sbullet1.GetComponent<BulletCtrl>().speed = speed;
-			sbullet0.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet1.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 5f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -5f, 0f);
-		} else if (js.saveData.selectedWeapon == 7) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<BulletCtrl>().speed = speed;
-			sbullet1.GetComponent<BulletCtrl>().speed = speed;
-			sbullet2.GetComponent<BulletCtrl>().speed = speed;
-			sbullet0.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet1.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet2.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 10f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -10f, 0f);
-		} else if (js.saveData.selectedWeapon == 8) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet3 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<BulletCtrl>().speed = speed;
-			sbullet1.GetComponent<BulletCtrl>().speed = speed;
-			sbullet2.GetComponent<BulletCtrl>().speed = speed;
-			sbullet3.GetComponent<BulletCtrl>().speed = speed;
-			sbullet0.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet1.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet2.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet3.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 5f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -5f, 0f);
-			sbullet2.transform.rotation = Quaternion.Euler(0f, 15f, 0f);
-			sbullet3.transform.rotation = Quaternion.Euler(0f, -15f, 0f);
-		} else if (js.saveData.selectedWeapon == 9) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet3 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet4 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<BulletCtrl>().speed = speed;
-			sbullet1.GetComponent<BulletCtrl>().speed = speed;
-			sbullet2.GetComponent<BulletCtrl>().speed = speed;
-			sbullet3.GetComponent<BulletCtrl>().speed = speed;
-			sbullet4.GetComponent<BulletCtrl>().speed = speed;
-			sbullet0.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet1.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet2.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet3.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet4.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 10f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -10f, 0f);
-			sbullet2.transform.rotation = Quaternion.Euler(0f, 20f, 0f);
-			sbullet3.transform.rotation = Quaternion.Euler(0f, -20f, 0f);
-		} else if (js.saveData.selectedWeapon == 10) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet3 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet4 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet5 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<BulletCtrl>().speed = speed;
-			sbullet1.GetComponent<BulletCtrl>().speed = speed;
-			sbullet2.GetComponent<BulletCtrl>().speed = speed;
-			sbullet3.GetComponent<BulletCtrl>().speed = speed;
-			sbullet4.GetComponent<BulletCtrl>().speed = speed;
-			sbullet5.GetComponent<BulletCtrl>().speed = speed;
-			sbullet0.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet1.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet2.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet3.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet4.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet5.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 5f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -5f, 0f);
-			sbullet2.transform.rotation = Quaternion.Euler(0f, 15f, 0f);
-			sbullet3.transform.rotation = Quaternion.Euler(0f, -15f, 0f);
-			sbullet4.transform.rotation = Quaternion.Euler(0f, 25f, 0f);
-			sbullet5.transform.rotation = Quaternion.Euler(0f, -25f, 0f);
-		} else if (js.saveData.selectedWeapon == 11) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet3 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet4 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet5 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet6 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<BulletCtrl>().speed = speed;
-			sbullet1.GetComponent<BulletCtrl>().speed = speed;
-			sbullet2.GetComponent<BulletCtrl>().speed = speed;
-			sbullet3.GetComponent<BulletCtrl>().speed = speed;
-			sbullet4.GetComponent<BulletCtrl>().speed = speed;
-			sbullet5.GetComponent<BulletCtrl>().speed = speed;
-			sbullet6.GetComponent<BulletCtrl>().speed = speed;
-			sbullet0.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet1.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet2.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet3.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet4.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet5.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet6.GetComponent<BulletCtrl>().damage = damageReal;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 10f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -10f, 0f);
-			sbullet2.transform.rotation = Quaternion.Euler(0f, 20f, 0f);
-			sbullet3.transform.rotation = Quaternion.Euler(0f, -20f, 0f);
-			sbullet4.transform.rotation = Quaternion.Euler(0f, 30f, 0f);
-			sbullet5.transform.rotation = Quaternion.Euler(0f, -30f, 0f);
+		if (js.saveData.weaponType == SaveData.WeaponType.Normal) {
+			GameObject _sbullet = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+			_sbullet.GetComponent<BulletCtrl>().speed = speed;
+			_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing1x) {
+			GameObject _sbullet = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+			_sbullet.GetComponent<BulletCtrl>().speed = speed;
+			_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing2x) {
+			Debug.Log("1");
+			for (int i = 0; i < 2; i++) {
+				GameObject _sbullet = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<BulletCtrl>().speed = speed;
+				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 5f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -5f, 0f);
+				}
+			}
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing3x) {
+			for (int i = 0; i < 3; i++) {
+				GameObject _sbullet = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<BulletCtrl>().speed = speed;
+				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 10f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -10f, 0f);
+				}
+			}
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing4x) {
+			for (int i = 0; i < 4; i++) {
+				GameObject _sbullet = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<BulletCtrl>().speed = speed;
+				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 5f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -5f, 0f);
+				} else if (i == 2) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 15f, 0f);
+				} else if (i == 3) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -15f, 0f);
+				}
+			}
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing5x) {
+			for (int i = 0; i < 4; i++) {
+				GameObject _sbullet = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<BulletCtrl>().speed = speed;
+				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 10f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -10f, 0f);
+				} else if (i == 2) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 20f, 0f);
+				} else if (i == 3) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -20f, 0f);
+				}
+			}
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread2x) {
+			for (int i = 0; i < 2; i++) {
+				GameObject _sbullet = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<BulletCtrl>().speed = speed;
+				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 5f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -5f, 0f);
+				}
+			}
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread3x) {
+			for (int i = 0; i < 3; i++) {
+				GameObject _sbullet = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<BulletCtrl>().speed = speed;
+				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 10f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -10f, 0f);
+				}
+			}
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread4x) {
+			for (int i = 0; i < 4; i++) {
+				GameObject _sbullet = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<BulletCtrl>().speed = speed;
+				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 5f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -5f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 15f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -15f, 0f);
+				}
+			}
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread5x) {
+			for (int i = 0; i < 5; i++) {
+				GameObject _sbullet = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<BulletCtrl>().speed = speed;
+				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 10f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -10f, 0f);
+				} else if (i == 2) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 20f, 0f);
+				} else if (i == 3) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -20f, 0f);
+				}
+			}
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread6x) {
+			for (int i = 0; i < 6; i++) {
+				GameObject _sbullet = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<BulletCtrl>().speed = speed;
+				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 5f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -5f, 0f);
+				} else if (i == 2) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 15f, 0f);
+				} else if (i == 3) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -15f, 0f);
+				} else if (i == 4) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 25f, 0f);
+				} else if (i == 5) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -25f, 0f);
+				}
+			}
+		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread7x) {// else if (js.saveData.selectedWeapon == 11) {
+			for (int i = 0; i < 7; i++) {
+				GameObject _sbullet = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<BulletCtrl>().speed = speed;;
+				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 10f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -10f, 0f);
+				} else if (i == 2) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 20f, 0f);
+				} else if (i == 3) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -20f, 0f);
+				} else if (i == 4) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 30f, 0f);
+				} else if (i == 5) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -30f, 0f);
+				}
+			}
 		}
 	}
 }
