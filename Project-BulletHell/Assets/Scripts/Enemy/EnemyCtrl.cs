@@ -3,15 +3,17 @@
 public class EnemyCtrl:MonoBehaviour {
 
 	[Header("Default Stats")]
-	public float maxHealth;
+	public float maxHealth = 15000;
 	public float health;
 	public float speed = 6;
-	public float fireRate;
+	public float fireRate = 0.6f;
+	public float spiralRotateSpeed = 8f;
 	[SerializeField]
 	private AttackType attackType;
 	
 	private bool canAttack = true;
 	private bool once;
+	private Transform bulletHolder;
 
 	[SerializeField]
 	private GameObject healthBar;
@@ -37,11 +39,12 @@ public class EnemyCtrl:MonoBehaviour {
 	private void Start() {
 		health = maxHealth;
 		InvokeRepeating("Shoot", fireRate, fireRate);
+		bulletHolder = GameObject.Find("BulletHolder").transform;
 	}
 
 	private void Update() {
 		if (health <= 0) {
-			Destroy(this.gameObject);
+			Destroy(gameObject);
 		}
 	}
 
@@ -65,194 +68,196 @@ public class EnemyCtrl:MonoBehaviour {
 		}
 
 		if (attackType == AttackType.Normal) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
+			GameObject sbullet0 = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
 			sbullet0.GetComponent<EnemyBulletCtrl>().speed = speed;
 		} else if (attackType == AttackType.Spread2x) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet1.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 5f + 180f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -5f + 180f, 0f);
+			for (int i = 0; i < 2; i++) {
+				GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<EnemyBulletCtrl>().speed = speed;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 5f + 180f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -5f + 180f, 0f);
+				}
+			}
 		} else if (attackType == AttackType.Spread3x) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet1.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet2.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 10f + 180f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -10f + 180f, 0f);
+			for (int i = 0; i < 3; i++) {
+				GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<EnemyBulletCtrl>().speed = speed;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 10f + 180f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -10f + 180f, 0f);
+				}
+			}
 		} else if (attackType == AttackType.Spread4x) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet3 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet1.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet2.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet3.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 5f + 180f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -5f + 180f, 0f);
-			sbullet2.transform.rotation = Quaternion.Euler(0f, 15f + 180f, 0f);
-			sbullet3.transform.rotation = Quaternion.Euler(0f, -15f + 180f, 0f);
+			for (int i = 0; i < 4; i++) {
+				GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<EnemyBulletCtrl>().speed = speed;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 5f + 180f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -5f + 180f, 0f);
+				} else if (i == 2) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 15f + 180f, 0f);
+				} else if (i == 3) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -15f + 180f, 0f);
+				}
+			}
 		} else if (attackType == AttackType.Spread5x) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet3 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet4 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet1.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet2.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet3.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet4.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 10f + 180f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -10f + 180f, 0f);
-			sbullet2.transform.rotation = Quaternion.Euler(0f, 20f + 180f, 0f);
-			sbullet3.transform.rotation = Quaternion.Euler(0f, -20f + 180f, 0f);
+			for (int i = 0; i < 5; i++) {
+				GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<EnemyBulletCtrl>().speed = speed;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 10f + 180f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -10f + 180f, 0f);
+				} else if (i == 2) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 20f + 180f, 0f);
+				} else if (i == 3) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -20f + 180f, 0f);
+				}
+			}
 		} else if (attackType == AttackType.Spread6x) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet3 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet4 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet5 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet1.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet2.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet3.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet4.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet5.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 5f + 180f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -5f + 180f, 0f);
-			sbullet2.transform.rotation = Quaternion.Euler(0f, 15f + 180f, 0f);
-			sbullet3.transform.rotation = Quaternion.Euler(0f, -15f + 180f, 0f);
-			sbullet4.transform.rotation = Quaternion.Euler(0f, 25f + 180f, 0f);
-			sbullet5.transform.rotation = Quaternion.Euler(0f, -25f + 180f, 0f);
+			for (int i = 0; i < 6; i++) {
+				GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<EnemyBulletCtrl>().speed = speed;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 5f + 180f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -5f + 180f, 0f);
+				} else if (i == 2) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 15f + 180f, 0f);
+				} else if (i == 3) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -15f + 180f, 0f);
+				} else if (i == 4) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 25f + 180f, 0f);
+				} else if (i == 5) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -25f + 180f, 0f);
+				}
+			}
 		} else if (attackType == AttackType.Spread7x) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet3 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet4 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet5 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet6 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet1.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet2.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet3.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet4.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet5.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet6.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 10f + 180f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -10f + 180f, 0f);
-			sbullet2.transform.rotation = Quaternion.Euler(0f, 20f + 180f, 0f);
-			sbullet3.transform.rotation = Quaternion.Euler(0f, -20f + 180f, 0f);
-			sbullet4.transform.rotation = Quaternion.Euler(0f, 30f + 180f, 0f);
-			sbullet5.transform.rotation = Quaternion.Euler(0f, -30f + 180f, 0f);
+			for (int i = 0; i < 7; i++) {
+				GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<EnemyBulletCtrl>().speed = speed;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 10f + 180f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -10f + 180f, 0f);
+				} else if (i == 2) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 20f + 180f, 0f);
+				} else if (i == 3) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -20f + 180f, 0f);
+				} else if (i == 4) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 30f + 180f, 0f);
+				} else if (i == 5) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -30f + 180f, 0f);
+				}
+			}
 		} else if (attackType == AttackType.CirShot6x) {
 			if (once == true) {
-				GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-				GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-				GameObject sbullet2 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-				GameObject sbullet3 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-				GameObject sbullet4 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-				GameObject sbullet5 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-				sbullet0.GetComponent<EnemyBulletCtrl>().speed = speed;
-				sbullet1.GetComponent<EnemyBulletCtrl>().speed = speed;
-				sbullet2.GetComponent<EnemyBulletCtrl>().speed = speed;
-				sbullet3.GetComponent<EnemyBulletCtrl>().speed = speed;
-				sbullet4.GetComponent<EnemyBulletCtrl>().speed = speed;
-				sbullet5.GetComponent<EnemyBulletCtrl>().speed = speed;
-				sbullet0.transform.rotation = Quaternion.Euler(0f, 10f + 180f, 0f);
-				sbullet1.transform.rotation = Quaternion.Euler(0f, -10f + 180f, 0f);
-				sbullet2.transform.rotation = Quaternion.Euler(0f, 10f, 0f);
-				sbullet3.transform.rotation = Quaternion.Euler(0f, -10f, 0f);
-				sbullet5.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+				for (int i = 0; i < 6; i++) {
+					GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
+					_sbullet.GetComponent<EnemyBulletCtrl>().speed = speed;
+					if (i == 0) {
+						_sbullet.transform.rotation = Quaternion.Euler(0f, 10f + 180f, 0f);
+					} else if (i == 1) {
+						_sbullet.transform.rotation = Quaternion.Euler(0f, -10f + 180f, 0f);
+					} else if (i == 2) {
+						_sbullet.transform.rotation = Quaternion.Euler(0f, 10f, 0f);
+					} else if (i == 3) {
+						_sbullet.transform.rotation = Quaternion.Euler(0f, -10f, 0f);
+					} else if (i == 4) {
+						_sbullet.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+					}
+				}
 				once = false;
 			} else {
-				GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-				GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-				GameObject sbullet2 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-				GameObject sbullet3 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-				GameObject sbullet4 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-				GameObject sbullet5 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-				sbullet0.GetComponent<EnemyBulletCtrl>().speed = speed;
-				sbullet1.GetComponent<EnemyBulletCtrl>().speed = speed;
-				sbullet2.GetComponent<EnemyBulletCtrl>().speed = speed;
-				sbullet3.GetComponent<EnemyBulletCtrl>().speed = speed;
-				sbullet4.GetComponent<EnemyBulletCtrl>().speed = speed;
-				sbullet5.GetComponent<EnemyBulletCtrl>().speed = speed;
-				sbullet0.transform.rotation = Quaternion.Euler(0f, 10f + 90f, 0f);
-				sbullet1.transform.rotation = Quaternion.Euler(0f, -10f + 90f, 0f);
-				sbullet2.transform.rotation = Quaternion.Euler(0f, 10f - 90f, 0f);
-				sbullet3.transform.rotation = Quaternion.Euler(0f, -10f - 90f, 0f);
-				sbullet4.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
-				sbullet5.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+				for (int i = 0; i < 6; i++) {
+					GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
+					_sbullet.GetComponent<EnemyBulletCtrl>().speed = speed;
+					if (i == 0) {
+						_sbullet.transform.rotation = Quaternion.Euler(0f, 10f + 90f, 0f);
+					} else if (i == 1) {
+						_sbullet.transform.rotation = Quaternion.Euler(0f, -10f + 90f, 0f);
+					} else if (i == 2) {
+						_sbullet.transform.rotation = Quaternion.Euler(0f, 10f - 90f, 0f);
+					} else if (i == 3) {
+						_sbullet.transform.rotation = Quaternion.Euler(0f, -10f - 90f, 0f);
+					} else if (i == 4) {
+						_sbullet.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+					} else if (i == 5) {
+						_sbullet.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+					}
+				}
 				once = true;
 			}
 		} else if (attackType == AttackType.CirShot8x) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet3 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet4 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet5 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet6 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet7 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet1.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet2.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet3.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet4.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet5.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet6.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet7.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 45f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
-			sbullet2.transform.rotation = Quaternion.Euler(0f, 135f, 0f);
-			sbullet3.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-			sbullet4.transform.rotation = Quaternion.Euler(0f, 225f, 0f);
-			sbullet5.transform.rotation = Quaternion.Euler(0f, 270f, 0f);
-			sbullet6.transform.rotation = Quaternion.Euler(0f, 315f, 0f);
-			sbullet7.transform.rotation = Quaternion.Euler(0f, 360f, 0f);
+			for (int i = 0; i < 8; i++) {
+				GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<EnemyBulletCtrl>().speed = speed;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 45f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+				} else if (i == 2) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 135f, 0f);
+				} else if (i == 3) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+				} else if (i == 4) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 225f, 0f);
+				} else if (i == 5) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 270f, 0f);
+				} else if (i == 6) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 315f, 0f);
+				} else if (i == 7) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 360f, 0f);
+				}
+			}
 		} else if (attackType == AttackType.CirShot12x) {
-			GameObject sbullet0 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet1 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet2 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet3 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet4 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet5 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet6 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet7 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet8 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet9 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet10 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			GameObject sbullet11 = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, GameObject.Find("BulletHolder").transform);
-			sbullet0.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet1.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet2.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet3.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet4.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet5.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet6.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet7.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet8.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet9.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet10.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet11.GetComponent<EnemyBulletCtrl>().speed = speed;
-			sbullet0.transform.rotation = Quaternion.Euler(0f, 20f + 180f, 0f);
-			sbullet1.transform.rotation = Quaternion.Euler(0f, -20f + 180f, 0f);
-			sbullet2.transform.rotation = Quaternion.Euler(0f, 20f, 0f);
-			sbullet3.transform.rotation = Quaternion.Euler(0f, -20f, 0f);
-			sbullet4.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-			sbullet5.transform.rotation = Quaternion.Euler(0f, 20f + 90f, 0f);
-			sbullet6.transform.rotation = Quaternion.Euler(0f, -20f + 90f, 0f);
-			sbullet7.transform.rotation = Quaternion.Euler(0f, 20f - 90f, 0f);
-			sbullet8.transform.rotation = Quaternion.Euler(0f, -20f - 90f, 0f);
-			sbullet9.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
-			sbullet10.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+			for (int i = 0; i < 12; i++) {
+				GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
+				_sbullet.GetComponent<EnemyBulletCtrl>().speed = speed;
+				if (i == 0) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 20f + 180f, 0f);
+				} else if (i == 1) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -20f + 180f, 0f);
+				} else if (i == 2) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 20f, 0f);
+				} else if (i == 3) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -20f, 0f);
+				} else if (i == 4) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+				} else if (i == 5) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 20f + 90f, 0f);
+				} else if (i == 6) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -20f + 90f, 0f);
+				} else if (i == 7) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 20f - 90f, 0f);
+				} else if (i == 8) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -20f - 90f, 0f);
+				} else if (i == 9) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+				} else if (i == 10) {
+					_sbullet.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+				}
+			}
+		} else if (attackType == AttackType.Spiral) {
+			if (!IsInvoking("Spiral")) {
+				InvokeRepeating("Spiral", 0, fireRate);
+			}
+		}
+	}
+
+	private float val = 0;
+
+	private void Spiral() {
+		GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
+		_sbullet.GetComponent<EnemyBulletCtrl>().speed = speed;
+		val++;
+		_sbullet.transform.rotation = Quaternion.Euler(0f, val * spiralRotateSpeed, 0f);
+		if ((val * spiralRotateSpeed) >= 360) {
+			val = 0;
 		}
 	}
 }

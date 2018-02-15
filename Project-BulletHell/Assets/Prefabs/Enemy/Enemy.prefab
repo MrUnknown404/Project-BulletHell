@@ -247,6 +247,7 @@ MonoBehaviour:
   health: 0
   speed: 6
   fireRate: 0.6
+  spiralRotateSpeed: 8
   attackType: 8
   healthBar: {fileID: 1234747416430540}
   bullet0: {fileID: 1169072608362224, guid: 60b2b562a5e9a0c44a16bc10c5695d8c, type: 2}

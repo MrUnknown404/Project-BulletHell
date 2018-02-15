@@ -34,7 +34,6 @@ public class GunCtrl:MonoBehaviour {
 		js.saveData.weaponType = _value;
 
 		bulletHolder = GameObject.Find("BulletHolder").transform;
-		;
 
 		UpdateWeapon();
 		UpdateSettings();
@@ -42,10 +41,11 @@ public class GunCtrl:MonoBehaviour {
 	
 	private void UpdateSettings() {
 		if (isUsingHoming == true) {
-			damageReal = (((damage + ((amountOfBullets - 1) * 10)) * damageMulti) / amountOfBullets) * 0.6f;
+			damageReal = (((damage + ((amountOfBullets - 1) * 20)) * damageMulti) / amountOfBullets) * 0.6f;
 		} else {
-			damageReal = ((damage + ((amountOfBullets - 1) * 10)) * damageMulti) / amountOfBullets;
+			damageReal = ((damage + ((amountOfBullets - 1) * 20)) * damageMulti) / amountOfBullets;
 		}
+		Debug.Log(damageReal);
 	}
 
 	private void UpdateWeapon() {
@@ -90,17 +90,17 @@ public class GunCtrl:MonoBehaviour {
 	
 	public void Shoot() {
 		if (js.saveData.weaponType == SaveData.WeaponType.Normal) {
-			GameObject _sbullet = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+			GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
 			_sbullet.GetComponent<BulletCtrl>().speed = speed;
 			_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
 		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing1x) {
-			GameObject _sbullet = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+			GameObject _sbullet = Instantiate(bullet1, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
 			_sbullet.GetComponent<BulletCtrl>().speed = speed;
 			_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
 		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing2x) {
 			Debug.Log("1");
 			for (int i = 0; i < 2; i++) {
-				GameObject _sbullet = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				GameObject _sbullet = Instantiate(bullet1, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
 				_sbullet.GetComponent<BulletCtrl>().speed = speed;
 				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
 				if (i == 0) {
@@ -111,7 +111,7 @@ public class GunCtrl:MonoBehaviour {
 			}
 		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing3x) {
 			for (int i = 0; i < 3; i++) {
-				GameObject _sbullet = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				GameObject _sbullet = Instantiate(bullet1, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
 				_sbullet.GetComponent<BulletCtrl>().speed = speed;
 				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
 				if (i == 0) {
@@ -122,7 +122,7 @@ public class GunCtrl:MonoBehaviour {
 			}
 		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing4x) {
 			for (int i = 0; i < 4; i++) {
-				GameObject _sbullet = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				GameObject _sbullet = Instantiate(bullet1, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
 				_sbullet.GetComponent<BulletCtrl>().speed = speed;
 				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
 				if (i == 0) {
@@ -137,7 +137,7 @@ public class GunCtrl:MonoBehaviour {
 			}
 		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing5x) {
 			for (int i = 0; i < 5; i++) {
-				GameObject _sbullet = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				GameObject _sbullet = Instantiate(bullet1, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
 				_sbullet.GetComponent<BulletCtrl>().speed = speed;
 				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
 				if (i == 0) {
@@ -152,7 +152,7 @@ public class GunCtrl:MonoBehaviour {
 			}
 		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread2x) {
 			for (int i = 0; i < 2; i++) {
-				GameObject _sbullet = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
 				_sbullet.GetComponent<BulletCtrl>().speed = speed;
 				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
 				if (i == 0) {
@@ -163,7 +163,7 @@ public class GunCtrl:MonoBehaviour {
 			}
 		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread3x) {
 			for (int i = 0; i < 3; i++) {
-				GameObject _sbullet = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
 				_sbullet.GetComponent<BulletCtrl>().speed = speed;
 				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
 				if (i == 0) {
@@ -174,7 +174,7 @@ public class GunCtrl:MonoBehaviour {
 			}
 		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread4x) {
 			for (int i = 0; i < 4; i++) {
-				GameObject _sbullet = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
 				_sbullet.GetComponent<BulletCtrl>().speed = speed;
 				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
 				if (i == 0) {
@@ -189,7 +189,7 @@ public class GunCtrl:MonoBehaviour {
 			}
 		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread5x) {
 			for (int i = 0; i < 5; i++) {
-				GameObject _sbullet = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
 				_sbullet.GetComponent<BulletCtrl>().speed = speed;
 				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
 				if (i == 0) {
@@ -204,7 +204,7 @@ public class GunCtrl:MonoBehaviour {
 			}
 		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread6x) {
 			for (int i = 0; i < 6; i++) {
-				GameObject _sbullet = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
 				_sbullet.GetComponent<BulletCtrl>().speed = speed;
 				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
 				if (i == 0) {
@@ -223,7 +223,7 @@ public class GunCtrl:MonoBehaviour {
 			}
 		} else if (js.saveData.weaponType == SaveData.WeaponType.Spread7x) {// else if (js.saveData.selectedWeapon == 11) {
 			for (int i = 0; i < 7; i++) {
-				GameObject _sbullet = Instantiate(bullet0, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
+				GameObject _sbullet = Instantiate(bullet0, gameObject.transform.position, gameObject.transform.rotation, bulletHolder);
 				_sbullet.GetComponent<BulletCtrl>().speed = speed;;
 				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
 				if (i == 0) {

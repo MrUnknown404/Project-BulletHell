@@ -27,18 +27,18 @@ public class PlayerMotor : MonoBehaviour {
 				rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
 			}
 		} else {
-			Vector3 p = new Vector3();
-			Camera c = Camera.main;
+			Vector3 pos = new Vector3();
+			Camera cam = Camera.main;
 
 			Vector2 mousePos = new Vector2 {
 				x = Input.mousePosition.x,
-				y = c.pixelHeight - Input.mousePosition.y
+				y = cam.pixelHeight - Input.mousePosition.y
 			};
 
-			p = c.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, c.nearClipPlane));
+			pos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, cam.nearClipPlane));
 
 			float _mul = 81.75f;
-			rb.MovePosition(new Vector3(p.x * _mul, 0f, -p.z * _mul));
+			rb.position = (new Vector3(pos.x * _mul, 0f, -pos.z * _mul));
 		}
 	}
 }
