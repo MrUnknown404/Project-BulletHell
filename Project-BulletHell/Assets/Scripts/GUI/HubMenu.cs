@@ -46,6 +46,10 @@ public class HubMenu : MonoBehaviour {
 		js.SaveGame();
 	}
 
+	public void QuitToMenu() {
+		SceneManager.LoadScene("MainMenu");
+	}
+
 	public void TempLoadLevel() {
 		//temp
 		SceneManager.LoadScene("Debug");

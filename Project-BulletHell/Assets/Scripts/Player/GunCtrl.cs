@@ -136,7 +136,7 @@ public class GunCtrl:MonoBehaviour {
 				}
 			}
 		} else if (js.saveData.weaponType == SaveData.WeaponType.Homing5x) {
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 5; i++) {
 				GameObject _sbullet = Instantiate(bullet1, this.gameObject.transform.position, this.gameObject.transform.rotation, bulletHolder);
 				_sbullet.GetComponent<BulletCtrl>().speed = speed;
 				_sbullet.GetComponent<BulletCtrl>().damage = damageReal;
