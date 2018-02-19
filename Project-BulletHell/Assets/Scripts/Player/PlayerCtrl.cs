@@ -39,6 +39,10 @@ public class PlayerCtrl : MonoBehaviour {
 		speed = js.configData.moveSpeed;
 		isMouseEnabled = js.configData.useMouse;
 		isAutoFireOn = js.configData.useAutoFire;
+
+		if (isAutoFireOn == true) {
+			InvokeRepeating("Shoot", 0, fireRate);
+		}
 	}
 
 	private void UpdateSettings() {
@@ -62,7 +66,7 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 
 	private void Update() {
-		if (Input.GetButtonDown("Key_Bomb")) {
+		if (Input.GetButtonDown("Key_Bomb") | Input.GetButtonDown("Mouse_1")) {
 			if (bombCount <= 0) {
 				return;
 			}
@@ -74,10 +78,8 @@ public class PlayerCtrl : MonoBehaviour {
 			}
 		}
 
-		if (isAutoFireOn == true && !IsInvoking("Shoot")) {
-			InvokeRepeating("Shoot", 0, fireRate);
-		} else if (isAutoFireOn == false) {
-			if (Input.GetButtonDown("Mouse_0") && !IsInvoking("Shoot")) {
+		if (isAutoFireOn == false) {
+			if (Input.GetButtonDown("Mouse_0")) {
 				InvokeRepeating("Shoot", 0, fireRate);
 			} else if (Input.GetButtonUp("Mouse_0")) {
 				CancelInvoke("Shoot");

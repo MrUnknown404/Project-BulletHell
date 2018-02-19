@@ -12649,8 +12649,10 @@ MonoBehaviour:
     bombCountUpgradeAmount: 0
     damageUpgradeAmount: 0
     firerateUpgradeAmount: 0
+    bulletSpeedUpgradeAmount: 0
     weaponsBought: 
     selectedWeapon: 0
+    weaponType: 0
 --- !u!4 &2103873990
 Transform:
   m_ObjectHideFlags: 0

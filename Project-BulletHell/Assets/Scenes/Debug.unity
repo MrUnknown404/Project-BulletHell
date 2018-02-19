@@ -371,9 +371,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMouseEnabled: 0
-  hitLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &215026778
 MonoBehaviour:
   m_ObjectHideFlags: 0
